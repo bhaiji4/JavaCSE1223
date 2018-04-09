@@ -1,0 +1,17 @@
+import java.util.Scanner;
+
+public class ClosedLab02 {
+
+	public static void main(String[] args) {
+		Scanner keyboard= new Scanner (System.in);
+		System.out.println("Enter your name: ");
+		String inputName=keyboard.nextLine();
+		System.out.println("Hello " + inputName);
+		System.out.println("Your name is " + inputName.length() + " letters long.");
+		System.out.println("Your name starts with a " + inputName.charAt(0) + ".");
+		System.out.println("Your name ends with a " + inputName.charAt(inputName.length()-1) + ".");
+		System.out.println("Goodbye " + inputName + "!");
+
+	}
+
+}
