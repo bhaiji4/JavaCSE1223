@@ -1,0 +1,77 @@
+
+package project05;
+
+import java.util.Scanner;
+
+public class Project05 {
+
+	public static void main(String[] args) {
+	
+		
+		Scanner keyboard = new Scanner (System.in);
+
+		int randomValue = (int)(100* Math.random()) + 1;
+		int stepsCounter = 0;
+		String stepsResult = "";
+
+		System.out.print("Enter a guess between 1 and 100: ");
+		int userGuess = keyboard.nextInt();
+		
+		
+		
+		while (userGuess!=randomValue)
+		{
+			if (userGuess<randomValue){
+			System.out.println("Your guess was too low. Try again.");
+			stepsCounter = stepsCounter+1;
+			System.out.println("Enter a guess between 1 and 100:");
+			userGuess = keyboard.nextInt();
+		}
+			else if (userGuess > randomValue){
+			System.out.println("Your guess was too high. Try again.");
+			stepsCounter = stepsCounter+1;
+			System.out.println("Enter a guess between 1 and 100:");
+			userGuess= keyboard.nextInt();
+			}
+			
+			else {
+				System.out.println("Congratulations! Your guess was correct!");
+				stepsCounter = stepsCounter+1;
+				break;
+			}
+		}
+		
+		
+// steps counter part!!//
+		if(stepsCounter==1){
+			stepsResult = ("That was lucky!");
+		}
+		else if(stepsCounter>=2 && stepsCounter <=4){
+			stepsResult = ("That was amazing!");
+		}
+		else if(stepsCounter ==5 && stepsCounter ==6) {
+			stepsResult = ("That was good."); 
+		}
+		else if (stepsCounter == 7){
+			stepsResult = ("That was OK.");
+		}
+		else if(stepsCounter==8 || stepsCounter == 9){
+			stepsResult = ("That was not very good.");
+		}
+		else if(stepsCounter>=10){
+			stepsResult = ("This just isn't your game.");
+		}
+		
+		//steps counter is done!//
+			
+//ending part
+		
+		System.out.println("I had chosen " + randomValue + " as the target number.");
+		System.out.println("You guessed it in " + stepsCounter + " tries.");
+		System.out.println(stepsResult);
+		
+		
+	
+	}
+	}
+
