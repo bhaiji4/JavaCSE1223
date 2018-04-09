@@ -1,0 +1,36 @@
+package midtermPractice;
+
+import java.util.Scanner;
+
+public class ClosedLab04part2 {
+
+	public static void main(String[] args) {
+		Scanner keyboard = new Scanner(System.in);
+		
+		System.out.println("Enter a time in HH:MM AM/PM format: ");
+		String militaryTime = keyboard.nextLine();
+		
+		int militaryTimeOne = Integer.parseInt(militaryTime.substring(0,2));
+		int militaryTimeTwo = Integer.parseInt(militaryTime.substring(3,5));
+		int militaryPMFinal = militaryTimeOne + 12;
+		
+
+		String mil1 = String.format("%02d", militaryTimeOne);
+		String mil2 = String.format("%02d", militaryTimeTwo);
+		String milFin = String.format("%02d", militaryPMFinal);
+		
+		if (militaryTime.contains("AM") && militaryTimeOne <12) {
+			System.out.println("Time in military time is: " + mil1 + mil2);
+		}
+		else if(militaryTime.contains("PM") && militaryTimeOne<12) {
+			System.out.println("Time in military time is: " + milFin + mil2);
+		}
+		else if(militaryTime.contains("AM") && militaryTimeOne == 12) {
+			System.out.println("Time in military time is: 00" + mil2);
+		}
+		else if(militaryTime.contains("PM") && militaryTimeOne == 12) {
+			System.out.println("Time in military time is: 12" + mil2);
+		}
+	}
+
+}
