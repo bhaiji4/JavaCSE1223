@@ -1,0 +1,29 @@
+import java.util.Scanner;
+
+public class ClosedLab05Part1 {
+
+	public static void main(String[] args) {
+		Scanner in=new Scanner (System.in);
+		
+		System.out.println("Enter a string to count the digits in: ");
+		String input=in.nextLine();
+		
+		int counter=0;
+		
+		int charInput=0;
+		
+		while (charInput<input.length()){
+			if(Character.isDigit(input.charAt(charInput))) {
+				counter++; 
+				charInput++;
+			}
+			else {
+				charInput++;
+			}
+			
+		}
+		
+		System.out.println("Your string contains " + counter + " digits.");
+
+}
+}
