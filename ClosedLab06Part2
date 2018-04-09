@@ -1,0 +1,52 @@
+package closedLab06;
+
+
+import java.util.Scanner;
+
+public class closeLab {
+
+	public static void main(String[] args) {
+	Scanner scanner = new Scanner(System.in);
+
+	System.out.println("Enter a string: ");
+	String input = scanner.nextLine();
+
+	
+	while (input.length()>0){
+		int i=0;
+		int j = input.length()-1;
+		boolean check = true;
+		///making sure the string is the appropriate length 
+	
+		if (input.charAt(i) == input.charAt(j)){
+			while (i<input.length()-1 && j>0){ //making sure they stop before string length
+				if (input.charAt(i) != input.charAt(j)) {
+					check = false;
+					}
+				else {
+					i++;
+					j--; //iterate to keep going through the string
+					
+				}
+			}
+			System.out.println(input + " is a palindrome.");
+			System.out.println("Enter a string: ");
+			input = scanner.nextLine();
+		}
+		
+		
+		else if(input.charAt(i) != input.charAt(j)) {
+			System.out.println(input + " is not a palindrome.");
+			System.out.println("Enter a string: ");
+			input = scanner.nextLine();
+		}
+		
+		
+	}
+if (input.length()<1) {
+	System.out.println("Empty line read! Goodbye!");
+	}
+}
+}
+	
+
