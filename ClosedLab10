@@ -1,0 +1,90 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+public class closedLabLol {
+	
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		
+		System.out.println("Enter the first wordlist: ");
+		ArrayList <String> first = getList(in);
+		System.out.println("Enter the second wordlist: ");
+		ArrayList <String> second = secondList(in);
+		
+		System.out.println("Wordlist 1: ");
+		displayList(first);
+		System.out.println("");
+		System.out.println("Wordlist 2: ");
+		displayList(second);
+		
+		System.out.println("List 2 appended to the end of list 1");
+		ArrayList <String>list1=getList(in);
+		ArrayList <String>list2=secondList(in);
+		ArrayList <String> append=appendLists(list1,list2);
+	
+		System.out.println("List 1 appended to the end of list 2");
+		append=appendLists(list2,list1);
+		
+	}
+	
+	private static ArrayList<String> getList(Scanner in) {
+		ArrayList <String> first = new ArrayList <String>();
+		System.out.println("Enter a word ('XXX' to quit): ");
+		String input = in.nextLine();
+		
+		while(input.equalsIgnoreCase("XXX")) {
+			break;
+		}
+		
+		while (!(input.equalsIgnoreCase("XXX"))) {
+				first.add(input);
+				System.out.println("Enter a word ('XXX' to quit): ");
+				input=in.nextLine();
+		}
+		System.out.println("");
+		return first;
+	}
+	
+	
+	private static ArrayList<String> secondList(Scanner in) {
+		ArrayList <String> second = new ArrayList <String>();
+		System.out.println("Enter a word ('XXX' to quit): ");
+		String otherInput = in.nextLine();
+		
+		while(otherInput.equalsIgnoreCase("XXX")) {
+			break;
+		}
+		
+		while (!(otherInput.equalsIgnoreCase("XXX"))) {
+				second.add(otherInput);
+				System.out.println("Enter a word ('XXX' to quit): ");
+				otherInput=in.nextLine();
+			}
+		return second;
+	}
+	
+	private static void displayList(ArrayList<String> myList) {
+		
+		for (int i=0;i<myList.size();i++) 
+			System.out.println(i + ":" + myList.get(i));
+	}
+	
+
+	private static ArrayList<String> appendLists(ArrayList<String> list1, ArrayList<String> list2) {
+		ArrayList<String> append = new ArrayList<String>();
+		for (int i=0;i<list1.size();i++) {
+			System.out.println(i + ":" + list1.get(i));
+			append.add(list1.get(i));
+		}
+		
+		int k=list1.size();
+		for (int j=0;j<list2.size();j++) {
+			k=list1.size();
+			System.out.println(k + ":" + list2.get(j));
+			append.add(list2.get(j));
+			k++;
+		}
+		return append;
+	}
+	
+
+}
