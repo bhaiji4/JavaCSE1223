@@ -1,0 +1,236 @@
+/*
+ * Project10.java
+ * 
+ *   A program that plays and scores a round of the game Poker Dice.  In this game,
+ *   five dice are rolled.  The player is allowed to select a number of those five dice
+ *   to re-roll.  The dice are re-rolled and then scored as if they were a poker hand.  
+ *   The following hands MUST be scored in this assignment:
+ *   	* High card
+ *   	* One Pair
+ *   	* Two Pair
+ *   	* Three of a Kind
+ *   	* Full House
+ *   	* Four of a Kind
+ *   	* Five of a Kind
+ *   For extra credit, you may also implement:
+ *   	* Straight
+ *   See the write-up for Homework Lab 11 for more details.
+ * 
+ * @author Talia Bhaiji
+ * 
+ */
+import java.util.Arrays;
+import java.util.Scanner;
+public class project10 {
+
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		int [] dice = new int [5];
+		
+		resetDice(dice);
+		rollDice(dice);
+		String stringArray=diceToString(dice);
+		System.out.print("Your current dice: " + stringArray);
+		promptForReroll(dice,in);
+		rollDice(dice);
+		System.out.println();
+		System.out.print("Your final dice is ");
+		for(int i=0;i<dice.length;i++) {
+			System.out.print(dice[i] + " ");
+		}
+		System.out.println();
+		System.out.println();
+		int [] array=getCounts(dice);
+		String result=getResult(dice);
+		System.out.println(result);
+		System.out.println();
+		boolean playAgain=promptForPlayAgain(in);
+		while (playAgain==true || playAgain==false)
+			if (playAgain==true) {
+				dice = new int [5];
+				
+				resetDice(dice);
+				rollDice(dice);
+				stringArray=diceToString(dice);
+				System.out.println();
+				System.out.println();
+				System.out.print("Your current dice: " + stringArray);
+				promptForReroll(dice,in);
+				rollDice(dice);
+				System.out.println();
+				System.out.print("Your final dice is ");
+				for(int i=0;i<dice.length;i++) {
+					System.out.print(dice[i] + " ");
+				}
+				System.out.println();
+				System.out.println();
+				array=getCounts(dice);
+				result=getResult(dice);
+				System.out.println(result);
+				System.out.println();
+				playAgain=promptForPlayAgain(in);
+			}
+			else if (playAgain==false) {
+				System.out.println("Goodbye!");
+				break;
+			}
+	}
+	
+	
+	private static void resetDice(int[] dice) {
+		for (int i=0;i<dice.length;i++) {
+			dice[i]=0;
+		}
+	}
+
+	private static void rollDice(int[] dice) {
+		int i=0;
+		while (i<dice.length){
+		int random = (int)(Math.random()*6)+1;
+			if (dice[i]==0) {
+			dice[i]=random;
+			i++;
+			}
+			else {
+				i++;
+			}
+		}
+	}
+	
+	private static String diceToString(int[] dice) {
+		// Fill in the body
+		String string=Arrays.toString(dice);
+		String stringArray=string.substring(1,14);
+		stringArray=stringArray.replace(",", "");
+		return stringArray;
+	}
+	
+
+	private static void promptForReroll(int[] dice, Scanner in) {
+		// Fill in the body
+		System.out.println();
+		System.out.println("Select a die to re-roll (-1 to keep remaining dice)): ");
+		int choice = in.nextInt();
+			while(choice>=0 && choice<=4) {
+				dice[choice]=0;
+				System.out.print("Your current dice: ");
+				for (int i=0;i<dice.length;i++) {
+					System.out.print(dice[i] + " ");
+				}
+				System.out.println();
+				System.out.println("Select a die to re-roll (-1 to keep remaining dice)): ");
+				choice = in.nextInt();		
+			}
+			while (choice==-1) {
+				System.out.println("Keeping remaining dice...");
+				System.out.println("Rerolling...");
+				break;
+			}
+			while (choice<-1 || choice>dice.length-1) {
+				System.out.println("ERROR: Index must be between 0 and 4 (-1 to quit)!");
+				System.out.println("Select a die to re-roll (-1 to keep remaining dice)): ");
+				choice = in.nextInt();
+			}
+		}
+
+	private static boolean promptForPlayAgain(Scanner in) {
+		System.out.println("Would you like to play again? [Y/N]?: ");
+		in.nextLine();
+		String yesNo=in.nextLine();
+		boolean playAgain=false;
+	
+		while (yesNo.length()>0) {
+			if(yesNo.equalsIgnoreCase("Y")) {
+				playAgain=true;
+				break;
+			}
+			else if (yesNo.equalsIgnoreCase("N")) {
+				playAgain=false;
+				break;
+			}
+			else if(yesNo.length()==0) {
+				System.out.println("ERROR: Invalid. Would you like to play again? [Y/N]?: ");
+				yesNo=in.nextLine();
+				}
+			}
+		
+		return playAgain;
+	}
+
+
+	private static String getResult(int[] dice) {
+		String result = "";
+		int count=0;
+		for (int i=0;i<dice.length-1;i++) {
+			if (dice[i]==dice[i+1]) {
+				count++;
+			}
+			else {
+				continue;
+			}
+		}
+		if (count==5) {
+			result="Five of a kind!";
+		}
+		else if (count==4) {
+			result = "Four of a kind!";
+		}
+		else if (count==3) {
+			result="Full House!!!!!"; // FIX THIS
+		}
+		else if (count==2) {
+			result="Two Pair!";
+		}
+		else if (count==1) {
+			result="One Pair!";
+		}
+		else {
+			result="Highest Card X!";
+		}
+		return result;
+	}
+	
+	private static int[] getCounts(int[] dice) {
+		// Fill in the body
+		int [] array = new int [6];
+		int one=0;
+		int two=0;
+		int three=0;
+		int four=0;
+		int five=0;
+		int six=0;
+		
+		for(int i=0;i<dice.length;i++) {
+			if (dice[i]==1) {
+				one++;
+			}
+			else if (dice[i]==2) {
+				two++;
+			}
+			else if (dice[i]==3) {
+				three++;
+			}
+			else if (dice[i]==4) {
+				four++;
+			}
+			else if (dice[i]==5) {
+				five++;
+			}
+			else if (dice[i]==6) {
+				six++;
+			}
+			
+			one=array[0];
+			two=array[1];
+			three=array[2];
+			four=array[3];
+			five=array[4];
+			six=array[5];
+		}
+		return array;
+	}
+	
+
+
+
+}
