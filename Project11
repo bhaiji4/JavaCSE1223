@@ -1,0 +1,166 @@
+/*
+ * Project11.java
+ * 
+ *   A program that plays simple word guessing game.  In this game the user provides a list of 
+ *   words to the program.  The program randomly selects one of the words to be guessed from 
+ *   this list.  The player then guesses letters in an attempt to figure out what the hidden 
+ *   word might be.  The number of guesses that the user takes are tracked and reported at the 
+ *   end of the game.
+ *   
+ *   See the write-up for Project 11 for more details.
+ * 
+ * @author Talia Bhaiji
+ * 
+ */
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.io.*;
+public class Project11 {
+	public static void main(String[] args){
+		Scanner in=new Scanner(System.in);
+		System.out.println("Enter a filename containing your wordlist: ");
+		String fileName=in.nextLine();
+		
+		try {
+			File file=new File(fileName);
+			Scanner inFile=new Scanner(file);
+			ArrayList<String> list=getList(inFile);
+			System.out.println("Read " + list.size() + " words from the file.");
+			String randomWord=getRandomWord(list);
+			String fullStars=starWord(randomWord);
+			System.out.println("Your word is: " + randomWord);
+			System.out.println("The word to guess is: " + fullStars); 
+			//everything up to here is OKAY
+			
+			System.out.println("Previous characters guessed: "); //edit this later
+			char theGuess=getCharacterGuess(in); //"enter a character to guess"
+			int charCount=checkChar(theGuess,randomWord);
+			if (charCount==1) {
+				System.out.println("The character " + theGuess + " occurs in " + charCount + " position");
+			}
+			else {
+				System.out.println("The character " + theGuess + " occurs in " + charCount + " positions");
+			}
+			String modified=modifyGuess(theGuess, randomWord,fullStars);
+		
+			System.out.println("The word now to guess is: " + modified + ".");
+			System.out.println("Enter your guess: ");
+			String userGuess=in.nextLine();
+			
+			boolean word=checkWord(userGuess,randomWord); //boolean
+			if (word=true) {
+				System.out.println("CONGRATULATIONS! " + randomWord + " is the word!");
+			}
+			System.out.println("You achieved the correct answer in guesses."); //edit later
+			System.out.println("Would you like a rematch? [y/n]: ");
+			String rematch=in.nextLine();
+			while (rematch.length()==1) {
+				if (rematch.equalsIgnoreCase("y")) {
+				System.out.println("Okay! Let's play again!");
+			}
+			else {
+				break;
+			}
+			ArrayList <Character> charWords=new ArrayList <Character>();
+			for (int i=0;i<userGuess.length();i++) {
+				charWords.add(userGuess.charAt(i));
+			}
+			boolean inThere=checkInList(theGuess,charWords);
+	
+			
+			inFile.close();
+		}
+		}
+		catch (IOException e) {
+			System.out.println("SORRY can't open the file lol.");
+		}
+	}
+
+	private static ArrayList<String> getList(Scanner in) {
+		ArrayList<String>list = new ArrayList<String>(); //ok so i made a new array list
+		
+		while(in.hasNext()) {
+			String newString=in.nextLine().toUpperCase();
+			list.add(newString);
+		}
+		return list;
+	}
+
+	private static boolean checkWord(String guess, String solution) {
+		boolean word=true;
+		while (guess.equals(solution)) {
+			word=true;
+		}
+		return word;
+	}
+	
+	private static String getRandomWord(ArrayList<String> list) {
+		int random=(int)(Math.random()*list.size()-1)+0;
+		String randomWord=list.get(random);
+		return randomWord;
+	}
+	
+	private static char getCharacterGuess(Scanner in) {
+		System.out.println("Enter a character to guess: ");
+		String charGuess=in.nextLine();
+		char theGuess=charGuess.charAt(0);
+		
+		while(charGuess.length()>1) {
+			System.out.println("ERROR. Enter one character ONLY.");
+			System.out.println("Enter a character to guess: ");
+			charGuess=in.nextLine();
+			theGuess=charGuess.charAt(0);
+		}
+		return theGuess;
+		}
+	
+	private static boolean checkInList(char inChar, ArrayList<Character> inList) {
+		if (inList.contains(inChar)) {
+			boolean inThere=true;
+			return inThere;
+		}
+		else {
+			boolean inThere=false;
+			return inThere;
+		}
+	}
+	
+	private static String starWord(String inWord) {
+		String fullStars="";
+		for (int i=0;i<inWord.length();i++){
+			String stars="*";
+			fullStars=fullStars+stars;
+		}
+		return fullStars;
+	}
+	
+	private static int checkChar(char guessChar, String actualWord) {
+		int charCount=0;
+		for (int i=0;i<actualWord.length();i++) {
+			if (actualWord.charAt(i)==guessChar) {
+				charCount++;
+			}
+			else {
+				i++;
+			}
+		}
+		return charCount;
+	}
+
+	private static String modifyGuess(char inChar, String word, String currentGuess) {
+		String modified="";
+		while (word.charAt(0)==inChar) {
+			modified=inChar + currentGuess.substring(1,currentGuess.length()-1);
+		}
+		for (int i=1;i<word.length();i++) {
+			if (word.charAt(i)==inChar) {
+				modified=currentGuess.substring(0,i) + inChar + currentGuess.substring(i+1,currentGuess.length());
+			}
+			else {
+				continue;
+			}
+		}
+		return modified;
+	}
+}
